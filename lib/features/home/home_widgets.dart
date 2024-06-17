@@ -1,14 +1,17 @@
 import 'package:fleaze/core/index.dart';
+import 'package:fleaze/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class _ContextItem {
   final String name;
   final IconData data;
+  final String link;
 
   const _ContextItem({
     required this.name,
     required this.data,
+    required this.link,
   });
 }
 
@@ -25,16 +28,20 @@ class _ContextMenuModalState extends State<ContextMenuModal> {
   @override
   void initState() {
     super.initState();
-    contextItems = const [
+    contextItems = [
       _ContextItem(
         name: "Add New Widget",
         data: Icons.add_rounded,
+        link: Pages.search,
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+
+    bool isDark = context.isDark;
+
     return SizedBox(
       height: 300.h,
       width: 390.w,
@@ -59,27 +66,34 @@ class _ContextMenuModalState extends State<ContextMenuModal> {
 
             _ContextItem item = contextItems[index - 1];
 
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 32.r,
-                  height: 32.r,
-                  decoration: BoxDecoration(
-                    color: var2,
-                    borderRadius: BorderRadius.circular(5.r),
+            return GestureDetector(
+              onTap: () {
+                context.router
+                    .pushNamed(item.link)
+                    .then((_) => Navigator.of(context).pop());
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 32.r,
+                    height: 32.r,
+                    decoration: BoxDecoration(
+                      color: isDark ? var2 : var3,
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    child: Icon(
+                      item.data,
+                      size: 26.r,
+                    ),
                   ),
-                  child: Icon(
-                    item.data,
-                    size: 26.r,
+                  SizedBox(width: 10.w),
+                  Text(
+                    item.name,
+                    style: context.textTheme.titleSmall,
                   ),
-                ),
-                SizedBox(width: 10.w),
-                Text(
-                  item.name,
-                  style: context.textTheme.titleSmall,
-                ),
-              ],
+                ],
+              ),
             );
           },
           separatorBuilder: (_, __) => SizedBox(height: 20.h),

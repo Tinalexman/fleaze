@@ -1,4 +1,6 @@
+import 'package:fleaze/core/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,8 +29,14 @@ class _HomepageState extends ConsumerState<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      appBar: AppBar(
+        toolbarHeight: 0.h,
+        backgroundColor: var10,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+      ),
+      backgroundColor: var10,
       body: InteractiveViewer(
         maxScale: 4,
         onInteractionStart: (details) {},
@@ -52,8 +60,8 @@ class _HomepageState extends ConsumerState<Homepage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: showContextMenu,
-        child: Icon(
-          Icons.add_rounded,
+        child: const Icon(
+          Icons.menu,
           color: Colors.white,
         ),
       ),

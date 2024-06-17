@@ -1,20 +1,23 @@
+import 'package:fleaze/core/index.dart' show StringExtension;
 import 'package:fleaze/features/home/home.dart';
+import 'package:fleaze/features/home/search.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:fleaze/core/index.dart' show StringExtension;
-
 class Pages {
-  static String get splash => "splash";
   static String get home => "home";
 
+  static String get search => "search";
+
   static List<GoRoute> get appRoutes => [
-    GoRoute(
-      path: Pages.home.path,
-      name: Pages.home,
-      builder: (_, __) => const Homepage(),
-    ),
-  ];
+        GoRoute(
+          path: home.path,
+          name: home,
+          builder: (_, __) => const Homepage(),
+        ),
+        GoRoute(
+          path: search.path,
+          name: search,
+          builder: (_, __) => const SearchPage(),
+        ),
+      ];
 }
-
-
-
