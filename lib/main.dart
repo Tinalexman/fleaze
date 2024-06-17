@@ -1,14 +1,14 @@
-import 'package:fleaze/misc/constants.dart';
-import 'package:fleaze/misc/routes.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:fleaze/core/index.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'routes.dart';
 
 Future<void> main() async {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
 
   runApp(const ProviderScope(child: FleazeApp()));
@@ -22,18 +22,16 @@ class FleazeApp extends ConsumerStatefulWidget {
 }
 
 class _FleazeAppState extends ConsumerState<FleazeApp> {
-
   late GoRouter router;
 
   @override
   void initState() {
     super.initState();
     router = GoRouter(
-      initialLocation: Pages.splash,
-      routes: routes,
+      initialLocation: Pages.home.path,
+      routes: Pages.appRoutes,
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +39,8 @@ class _FleazeAppState extends ConsumerState<FleazeApp> {
       builder: (_, __) => MaterialApp.router(
         title: 'Fleaze',
         routerConfig: router,
-        theme: FlexColorScheme.light(
-            scheme: FlexScheme.ebonyClay
-        ).toTheme,
-        darkTheme: FlexColorScheme.dark(
-            scheme: FlexScheme.ebonyClay
-        ).toTheme,
+        theme: AppTheme.lightThemeData,
+        darkTheme: AppTheme.darkThemeData,
       ),
       minTextAdapt: true,
       ensureScreenSize: true,
@@ -54,6 +48,4 @@ class _FleazeAppState extends ConsumerState<FleazeApp> {
       splitScreenMode: false,
     );
   }
-
 }
-
